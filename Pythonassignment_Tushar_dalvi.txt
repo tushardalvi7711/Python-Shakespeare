@@ -1,0 +1,219 @@
+1.Download first 5 text files (Shakespeare’s plays) from the following URL using a python 
+script: http://www.textfiles.com/etext/AUTHORS/SHAKESPEARE/
+Store these in a separate folder.
+(Find the 5 URLs pointing to .txt files in the above page using code. 
+Do not manually put any URL other than the above mentioned one in the 
+
+import requests
+from bs4 import BeautifulSoup
+#importing the libraries
+
+url = "http://www.textfiles.com/etext/AUTHORS/SHAKESPEARE/"
+r= requests.get(url)
+soup = BeautifulSoup(r.content,'html.parser')
+
+links = soup.findAll('a')
+links
+
+
+
+all_links = [link.get("href") for link in soup("a")]
+all_links
+
+newlink = all_links[1:6]
+newlink
+
+# making a new folder on desktop with os and after that 
+#commented it 
+"""
+import os
+os.mkdir("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder")
+"""
+for i in range(0,5):
+    url1 =("http://www.textfiles.com/etext/AUTHORS/SHAKESPEARE/"+newlink[i])
+    r1= requests.get(url1)
+    open("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\"+newlink[i],"wb").write(r1.content)
+    
+   
+''' 
+soumitra's code
+import requests
+from bs4 import BeautifulSoup
+
+url = 'http://www.textfiles.com/etext/AUTHORS/SHAKESPEARE/'
+grab = requests.get(url)
+soup = BeautifulSoup(grab.text, "html.parser")
+urls = []
+all_a_tags = soup.find_all('a')
+
+text_file_urls = []
+for link in soup.find_all('a'):
+    file_name = link.get('href')
+    if file_name.endswith('.txt'):
+        full_url = url + file_name
+        text_file_urls.append(full_url)
+
+play_text_list = []
+for url_no in range(5):
+    text = requests.get(text_file_urls)
+'''
+------------------------------------------------------
+Q.2 Get all { file name : { line number : number of words in the line } } combinations in a dictionary.
+
+import os
+
+# Imorting the library
+files = os.listdir("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder")
+# reading all the files from folder
+
+dict2 = {}
+
+for list_file in files:
+   with open(os.path.join ("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\" ,list_file), "r") as file:
+    line_number = 1
+
+    dict = {}
+    for line in file:
+        data = (len(line.split()))
+        #finding the number of words in each line 
+        dict[f'{line_number}'] = data
+        line_number += 1
+        #now storing file names as key and dictionary of line no and words as value
+        dict2[f"{list_file}"] = dict
+
+print(dict2)
+
+
+-------------------------------------------------------------------
+3.Find number of lines with more than 10 words in each file.
+
+import os
+
+# Imorting the library
+files = os.listdir("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder")
+# reading all the files from folder
+
+dict2 = {}
+
+for list_file in files:
+   with open(os.path.join ("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\" ,list_file), "r") as file:
+    line_number = 1
+    dict = {}
+    for line in file:
+        data = (len(line.split()))
+        #splitting the line and getting count of number of words
+        #if no of words count greater than 10 then increase line value by one
+        if data >10:
+            line_number=line_number+1
+        else:
+            continue
+    print(f"file name :{list_file} no of line:{line_number} have more than 10 words")
+
+
+-----------------------------------------------------------------------
+Q.4 Find number of words spoken by each character in all the plays.
+
+#importing the required library
+import os
+list_of_files= os.listdir('C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder')
+#reading as a list of file
+for file_name in list_of_files:
+   with open(os.path.join ("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\" ,file_name), "r") as file:
+    line_number = 1
+    word = 'ACT'
+    for line in file:
+        data = file.read()
+        list_character = []
+        dict_char_dia = {}
+        modified_data = data.replace('\n\t', ' ')  # splitting the character  and removing the line space
+        clear_data = (modified_data.split('\n\n'))
+        for line in clear_data:
+            if 'ACT'and 'SCENE' and '\n[' and '\n' not in line:
+                #if these words in line skip them 
+                            converted = (line.split('\t'))
+
+                            # seperated name and dialogue
+                            character = converted[0]
+                            if len(converted) == 1:
+                                continue
+                            words = len(converted[1].split())
+                            if character not in list_character:
+                                list_character.append(character)
+                                dict_char_dia[character] = (words)
+                            else:
+                                dict_char_dia[character] += (words)
+
+    print(dict_char_dia)
+file.close()
+-----------------------------------------------------------------------------------------------------
+5.Find 10 most common words spoken by each character.
+import os
+from collections import Counter
+#importing the libraeries
+fileslist = os.listdir('C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\')
+#fetching all the files
+for file in fileslist:
+    dict2 = {}
+    f = open('C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\'+ file, "r")
+    word = 'ACT'
+    for line in f:
+        if word in line:
+            data = f.read()
+            #reading the data
+            charlist = []
+            dict_char_dia = {}
+            newdata = data.replace('\n\t', ' ')
+            clear_data = (newdata.split('\n\n'))
+            for line in clear_data:
+                if 'ACT' and 'SCENE' and '\n[' and '\n' not in line:
+                                converted = (line.split('\t'))
+                                character = converted[0]
+                                if len(converted) == 1:
+                                    continue
+                                words = (converted[1])
+                                if character not in charlist:
+                                    charlist.append(character)
+                                    dict_char_dia[character] = (words)
+                                else:
+                                    dict_char_dia[character] += (words)
+    for char_name, dia in dict_char_dia.items():
+        q = dia.split()
+        for o in q:
+            x = Counter(q)
+            #finding the number of words
+            most_occur = x.most_common(10)
+            dict2[char_name] = most_occur
+    print(dict2)
+   
+
+-----------------------------------------------------------------------------------------------
+
+
+Q.6 Find the following information about each file and store in a single csv:
+Size in bytes
+Last modified datetime
+Absolute path
+
+import os
+import datetime
+import csv
+
+# Get the list of all files from directory
+list_of_file = os.listdir("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder")
+with open('C:\\Users\\Tushar_Dalvi\\Desktop\\file.csv', "w") as file_csv:
+    # format to write content into csv file
+    write_format = csv.writer(file_csv, delimiter =',', quotechar=' ')
+    # header of csv file
+    write_format.writerow(["file_name","Size_in_bytes","Last_modified_Date_Time","Absolute_path"])
+    for file in list_of_file:
+        # get size of files in bytes
+        size = os.path.getsize(os.path.join("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\",file))
+        # get time
+        time = os.path.getmtime(os.path.join("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\",file))
+        # get modify time if file is modified
+        modified_time = datetime.datetime.fromtimestamp(time)
+
+        # get absolute path of file
+        path = os.path.abspath(os.path.join("C:\\Users\\Tushar_Dalvi\\Desktop\\newfolder\\",file))
+
+        write_format.writerow([file,size,modified_time,path])
