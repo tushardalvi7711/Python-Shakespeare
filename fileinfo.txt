@@ -1,0 +1,20 @@
+shakespeare-alls-11.txt
+,size of file is:135197,
+modification date is:2022-09-30 14:49:12.345349,
+path of file is:C:\Users\Tushar_Dalvi\Desktop\newfolder\shakespeare-alls-11.txt
+shakespeare-antony-23.txt
+,size of file is:158248,
+modification date is:2022-09-30 14:49:14.655330,
+path of file is:C:\Users\Tushar_Dalvi\Desktop\newfolder\shakespeare-antony-23.txt
+shakespeare-as-12.txt
+,size of file is:125011,
+modification date is:2022-09-30 14:49:16.783166,
+path of file is:C:\Users\Tushar_Dalvi\Desktop\newfolder\shakespeare-as-12.txt
+shakespeare-comedy-7.txt
+,size of file is:89439,
+modification date is:2022-09-30 14:49:19.878472,
+path of file is:C:\Users\Tushar_Dalvi\Desktop\newfolder\shakespeare-comedy-7.txt
+shakespeare-coriolanus-24.txt
+,size of file is:168133,
+modification date is:2022-09-30 14:49:22.237426,
+path of file is:C:\Users\Tushar_Dalvi\Desktop\newfolder\shakespeare-coriolanus-24.txt
